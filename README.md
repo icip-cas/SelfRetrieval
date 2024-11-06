@@ -23,6 +23,8 @@ export result_dir=../retrieve_outputs/NQ/self_retrieval_llama
 ```
 
 ```bash
+cd data_preprocess
+
 python mem_dataset.py 
     --data_path ${data_dir}/docs.json
     --output_path ${data_dir}/mem_all.json
@@ -62,6 +64,8 @@ python qa_dataset.py
 
 After completing data preprocessing, you can use the scripts `sft.sh` for model training.
 ```bash
+cd train
+
 bash sft.sh ${data_dir}/mem_all.json meta-llama/Llama-2-7b-hf ${index_model_path}
 
 bash sft.sh ${data_dir}/mem3_neg5_cfg1_repeat2_llama2.json ${index_model_path} ${model_path}
@@ -78,6 +82,8 @@ python gettrie.py \
 ### Evaluation for Retrieval
 - predict
 ```bash
+cd evaluation
+
 python predict.py \
     --model_path ${model_path} \
     --trie ${data_dir}/trie.json \
