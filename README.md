@@ -12,8 +12,16 @@ Experimental results demonstrate that Self-Retrieval not only outperforms existi
 For more information, checkout our [paper](https://arxiv.org/pdf/2403.00801).
 
 ## Data Preprocess
-- download the original data from https://drive.google.com/drive/folders/1GfW0WxQUTnAz0pJ5WRyVFgUhni-yz75f?usp=sharing
+- download the original data from [google drive](https://drive.google.com/drive/folders/1GfW0WxQUTnAz0pJ5WRyVFgUhni-yz75f?usp=sharing).
 - build indexing data
+
+```bash
+export data_dir=../data/NQ
+export index_model_path=../models/NQ/index_llama
+export model_path=../models/NQ/self_retrieval_llama
+export result_dir=../retrieve_outputs/NQ/self_retrieval_llama
+```
+
 ```bash
 python mem_dataset.py 
     --data_path ${data_dir}/docs.json
@@ -23,7 +31,7 @@ python mem_dataset.py
     --tile_and_prefix_only
 
 python mem_dataset.py 
-    --data_path ${original_data_path}
+    --data_path ${data_dir}/docs.json
     --output_path ${data_dir}/mem_3.json
     --random_sent_num
     --lower_title 
@@ -54,9 +62,9 @@ python qa_dataset.py
 
 After completing data preprocessing, you can use the scripts `sft.sh` for model training.
 ```bash
-bash sft.py ${data_dir}/mem_all.json meta-llama/Llama-2-7b-hf ${index_model_path}
+bash sft.sh ${data_dir}/mem_all.json meta-llama/Llama-2-7b-hf ${index_model_path}
 
-bash sft.py ${data_dir}/mem3_neg5_cfg1_repeat2_llama2.json ${index_model_path} ${model_path}
+bash sft.sh ${data_dir}/mem3_neg5_cfg1_repeat2_llama2.json ${index_model_path} ${model_path}
 ```
 ## Evaluation
 ### Building the Tire
@@ -75,14 +83,14 @@ python predict.py \
     --trie ${data_dir}/trie.json \
     --corpus ${data_dir}/docs.json \
     --data_path ${data_dir}/test.json \
-    --output_dir ../retrieval_output/llama \
+    --output_dir ${result_dir} \
     --beam_num_for_title 5 \
     --beam_num_for_chunk 10
 ```
 - get the final results
 ```bash
 python get_retrieve_from_generation.py \
-    --output_path ../retrieval_output/llama \
+    --output_path ${result_dir} \
     --corpus ${data_dir}/docs.json \
     --data_path ${data_dir}/test.json
 ```
@@ -93,7 +101,7 @@ python rag.py \
     --plm ${model_path} \
     --rplm ${model_path} \
     --lower True \
-    --testsetfile ../retrieval_output/llama/retrieve.json \
+    --testsetfile ${result_dir}/retrieve.json \
     --contextfile ${data_dir}/docs.json
 ```
 
