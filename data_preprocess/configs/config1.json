@@ -1,0 +1,43 @@
+[
+    {
+        "title_candidate": false,
+        "title": true,
+        "content_prefix": false,
+        "content_all": false,
+        "answer": false,
+        "ratio": 1
+    },
+    {
+        "title_candidate": true,
+        "title": true,
+        "content_prefix": true,
+        "content_all": false,
+        "answer": true,
+        "ratio": 1
+    },
+    {
+        "title_candidate": true,
+        "title": true,
+        "content_prefix": false,
+        "content_all": false,
+        "answer": false,
+        "ratio": 1
+    },
+    {
+        "title_candidate": true,
+        "title": false,
+        "content_prefix": false,
+        "content_all": false,
+        "neg": true,
+        "answer": true,
+        "ratio": 1
+    },
+    {
+        "title_candidate": true,
+        "title": false,
+        "content_prefix": true,
+        "content_all": false,
+        "answer": true,
+        "ratio": 1
+    }
+]
