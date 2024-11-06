@@ -73,6 +73,8 @@ bash sft.sh ${data_dir}/mem3_neg5_cfg1_repeat2_llama2.json ${index_model_path} $
 ## Evaluation
 ### Building the Tire
 ```bash
+cd evaluation
+
 python gettrie.py \
     --model_path meta-llama/Llama-2-7b-hf \
     --corpus ${data_dir}/docs.json \
@@ -82,8 +84,6 @@ python gettrie.py \
 ### Evaluation for Retrieval
 - predict
 ```bash
-cd evaluation
-
 python predict.py \
     --model_path ${model_path} \
     --trie ${data_dir}/trie.json \
