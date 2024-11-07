@@ -25,39 +25,39 @@ export result_dir=../retrieve_outputs/NQ/self_retrieval_llama
 ```bash
 cd data_preprocess
 
-python mem_dataset.py 
-    --data_path ${data_dir}/docs.json
-    --output_path ${data_dir}/mem_all.json
-    --use_all_sents
-    --lower_title 
+python mem_dataset.py \
+    --data_path ${data_dir}/docs.json \
+    --output_path ${data_dir}/mem_all.json \
+    --use_all_sents \
+    --lower_title \
     --tile_and_prefix_only
 
-python mem_dataset.py 
-    --data_path ${data_dir}/docs.json
-    --output_path ${data_dir}/mem_3.json
-    --random_sent_num
-    --lower_title 
+python mem_dataset.py \
+    --data_path ${data_dir}/docs.json \
+    --output_path ${data_dir}/mem_3.json \
+    --random_sent_num \
+    --lower_title \
     --tile_and_prefix_only
 ```
 
 - add negative data to the training set
 ```bash
-python add_neg_data.py 
-    --data_path ${data_dir}/train.json
-    --output_path ${data_dir}/train_neg5.json
-    --doc_path ${data_dir}/docs.json
+python add_neg_data.py \
+    --data_path ${data_dir}/train.json \
+    --output_path ${data_dir}/train_neg5.json \
+    --doc_path ${data_dir}/docs.json \
     --neg_num 5
 ```
 
 - build the training dataset
 ```bash
-python qa_dataset.py
-    --qa_path ${data_dir}/train_neg5.json
-    --doc_path ${data_dir}/docs.json
-    --mem_data_path ${data_dir}/mem_3.json
-    --output_path ${data_dir}/mem3_neg5_cfg1_repeat2_llama2.json
-    --config_path ./configs/config1.json
-    --qa_repeat_times 2
+python qa_dataset.py \
+    --qa_path ${data_dir}/train_neg5.json \
+    --doc_path ${data_dir}/docs.json \
+    --mem_data_path ${data_dir}/mem_3.json \
+    --output_path ${data_dir}/mem3_neg5_cfg1_repeat2_llama2.json \
+    --config_path ./configs/config1.json \
+    --qa_repeat_times 2 \
     --eos_token '</s>'
 ```
 ## Training
